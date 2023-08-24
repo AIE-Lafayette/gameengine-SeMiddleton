@@ -1,7 +1,10 @@
 #pragma once
+#include "Scene.h"
+
 
 namespace GameEngine
 {
+	class Scene;
 
 	class Engine
 	{
@@ -10,8 +13,11 @@ namespace GameEngine
 
 		double getDeltaTime() { return m_deltaTime; }
 
-		bool getApplicationShouldClose() { return m_applicationShouldClose; }
-		void setApplicationShouldClose(bool value) { m_applicationShouldClose = value; }
+		static void setCurrentScene(Scene* scene) { m_currentScene = scene; }
+		static Scene* getCurrentScene() { return m_currentScene; }
+
+		static bool getApplicationShouldClose();
+		static void closeApplication();
 
 		void run();
 
@@ -22,7 +28,7 @@ namespace GameEngine
 		void end();
 
 	private:
-		bool m_applicationShouldClose;
 		static double m_deltaTime;
+		static Scene* m_currentScene;
 	};
 }
