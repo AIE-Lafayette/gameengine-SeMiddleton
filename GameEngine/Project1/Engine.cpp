@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include <chrono>
 #include "Scene.h"
-#include "Window.h"
+#include "GameGraphics/Window.h"
 
 GameEngine::Scene* GameEngine::Engine::m_currentScene = nullptr;
 double GameEngine::Engine::m_deltaTime = 0;

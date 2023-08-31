@@ -1,5 +1,5 @@
 #pragma once
-#include "TransformComponent.h"
+#include "Project1/TransformComponent.h"
 
 namespace GameGraphics
 {
@@ -13,7 +13,10 @@ namespace GameGraphics
         public GameEngine::Component
     {
     public:
+        ShapeComponent() {};
         ShapeComponent(ShapeType shapeType) : Component() { m_shapeType = shapeType; }
+
+        void setShapeType(ShapeType shapeType) { m_shapeType = shapeType; }
 
         void setColor(unsigned int color) { m_color = color; }
         ShapeType getShapeType() { return m_shapeType; }

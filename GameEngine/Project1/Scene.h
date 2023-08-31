@@ -1,6 +1,11 @@
 #pragma once
 #include"Entity.h"
 
+namespace GamePhysics
+{
+	class ColliderComponent;
+}
+
 namespace GameEngine
 {
 	class Scene
@@ -22,8 +27,12 @@ namespace GameEngine
 
 		void removeEntity(Entity* entity);
 
+		void addActiveCollider(GamePhysics::ColliderComponent* collider) { m_activeColliders.add(collider); }
+		void removeActiveCollider(GamePhysics::ColliderComponent* collider) { m_activeColliders.remove(collider); }
+
 	private:
 		List<Entity*> m_entities;
+		List<GamePhysics::ColliderComponent*> m_activeColliders;
 	};
 
 }
