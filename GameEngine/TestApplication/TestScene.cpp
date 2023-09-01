@@ -24,7 +24,7 @@ void TestScene::onStart()
 	circle2->addComponent(new GamePhysics::CircleColliderComponent(30));
 
 	rigidBody2->setGravity(0);
-	circle2->getTransform()->setLocalPosition(100, 500);
+	circle2->getTransform()->setLocalPosition(330, 700);
 
 	circle2->getTransform()->setLocalScale(25, 25);
 
@@ -35,4 +35,5 @@ void TestScene::onStart()
 	circle->getTransform()->setLocalScale(25, 25);
 
 	addEntity(circle);
+	addEntity(circle2);
 }

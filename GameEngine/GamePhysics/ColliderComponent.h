@@ -22,7 +22,7 @@ namespace GamePhysics
         Collision* checkCollision(ColliderComponent* other);
 
         virtual Collision* checkCollisionCircle(CircleColliderComponent* other) = 0;
-        virtual Collision* checkCollisionAABB(AABBColliderComponent* other) { return nullptr; }
+        virtual Collision* checkCollisionAABB(AABBColliderComponent* other) = 0;
 
         void onCollision(GamePhysics::Collision* other) override;
 
