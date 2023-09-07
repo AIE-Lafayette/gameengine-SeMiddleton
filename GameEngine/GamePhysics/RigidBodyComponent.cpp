@@ -42,6 +42,18 @@ void GamePhysics::RigidBodyComponent::applyForceToActor(RigidBodyComponent* othe
 	other->applyForce(force);
 }
 
+void GamePhysics::RigidBodyComponent::resolveCollision(GamePhysics::Collision* collisionData)
+{
+	//Calculate average elasticity
+	//Average = (elasticity1 + elasticity2) / 2
+
+	//j = (-(1 + e) * dot(vA - vB, n)) / (dot(n , n) * (1/mA + 1/mB))
+
+	//F = n * -j
+
+
+}
+
 void GamePhysics::RigidBodyComponent::update(double deltaTime)
 {
 	GameMath::Vector3 position = getOwner()->getTransform()->getLocalPosition();

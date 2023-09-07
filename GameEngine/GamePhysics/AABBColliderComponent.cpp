@@ -4,11 +4,26 @@
 #include <Raylib/raylib.h>
 #include "Project1/Engine.h"
 #include "Project1/Scene.h"
+#include "CircleColliderComponent.h"
 
 
 GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle(CircleColliderComponent* other)
 {
-	
+	GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
+    GameMath::Vector3 otherPosition = other->getOwner()->getTransform()->getGlobalPosition();
+
+    GameMath::Vector3 direction = otherPosition - position;
+    float distance = direction.getMagnitude();
+
+    if(distance > other->getRadius() + getRadius())
+    return nullptr;
+
+    GamePhysics::Collision* collisionData = new GamePhysics::Collision();
+
+    collisionData->collider = other;
+    collisionData->normal = direction.getNormalized();
+
+    return collisionData;
 }
 
 GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionAABB(AABBColliderComponent* other)

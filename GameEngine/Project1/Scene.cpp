@@ -28,11 +28,16 @@ void GameEngine::Scene::update(double deltaTime)
 	}
 	onUpdate();
 
-	for (GamePhysics::ColliderComponent* collider1 : m_activeColliders)
+	for (auto iterator1 = m_activeColliders.begin(); iterator1 != m_activeColliders.end(); iterator1++)
 	{
-		for (GamePhysics::ColliderComponent* collider2 : m_activeColliders)
+		for (auto iterator2 = iterator1; iterator2 != m_activeColliders.end(); iterator2++)
 		{
-			if (collider1 == collider2 || collider2->getOwner()->getEnabled() || collider1->getOwner()->getEnabled())
+
+
+			GamePhysics::ColliderComponent* collider1 = *iterator1;
+			GamePhysics::ColliderComponent* collider2 = *iterator2;
+
+			if (iterator1 == iterator2 || collider1->getOwner()->getEnabled() || !collider2->getOwner()->getEnabled())
 				continue;
 
 			GamePhysics::Collision* collisionData1 = nullptr;

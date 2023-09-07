@@ -18,8 +18,11 @@ namespace GamePhysics
 		float getGravity() { return m_gravity; }
 		void setGravity(float gravity) { m_gravity = gravity; }
 
-		float getMass() { return m_mass; }
-		void setMass(float mass) {}
+		float getElasticity() { return m_gravity; }
+		void setElasticity(float elasticity) { m_elasticity = elasticity; }
+
+		float getMass();
+		void setMass(float mass) { m_mass = mass; }
 
 		void applyForce(GameMath::Vector3 force);
 		void applyForce(GameMath::Vector2 force);
@@ -27,10 +30,13 @@ namespace GamePhysics
 		void applyForceToActor(RigidBodyComponent* other, GameMath::Vector3 force);
 		void applyForceToActor(RigidBodyComponent* other, GameMath::Vector2 force);
 
+		void resolveCollision(GamePhysics:: Collision* collisionData);
+
 		void update(double deltaTime) override;
 
 	private:
 		float m_mass = 1;
+		float m_elasticity = 0;
 		float m_gravity = 9.81f;
 		GameMath::Vector3 m_velocity = GameMath::Vector3();
 	};
