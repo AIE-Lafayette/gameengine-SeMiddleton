@@ -57,21 +57,20 @@ void GamePhysics::RigidBodyComponent::applyContactForce(GamePhysics::Collision* 
 
 	if (!getIsKinematic())
 	{
-		GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
-		getOwner()->getTransform()->setLocalPosition(position - (displacement1 * other->normal * penetrationDistance));
+		applyForceToActor(other->collider->getRigidBody(), other->normal * displacement1 * penetrationDistance);
 	}
 
-	float displacement2 = massOther;
+	//float displacement2 = massOther;
 
-	if (mass != INFINITY)
-		displacement2 = -(mass / mass + massOther);
+	//if (mass != INFINITY)
+	//	displacement2 = -(mass / mass + massOther);
 
-	if (!other->collider->getRigidBody()->getIsKinematic())
-	{
-		GameMath::Vector3 position = other->collider->getOwner()->getTransform()->getGlobalPosition();
+	//if (!other->collider->getRigidBody()->getIsKinematic())
+	//{
+	//	GameMath::Vector3 position = other->collider->getOwner()->getTransform()->getGlobalPosition();
 
-		other->collider->getOwner()->getTransform()->setLocalPosition(position + (displacement2 * other->normal * penetrationDistance));
-	}
+	//	other->collider->getOwner()->getTransform()->setLocalPosition(position + (displacement2 * other->normal * penetrationDistance));
+	//}
 }
 
 void GamePhysics::RigidBodyComponent::resolveCollision(GamePhysics::Collision* collisionData)

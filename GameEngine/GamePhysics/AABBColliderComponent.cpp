@@ -36,7 +36,7 @@ GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle
 //
 //	if()
 // 
-// collisionData->contsactPoint = closestpoint;
+// collisionData->contactPoint = closestpoint;
 // collisionData->penetrationDistance = getPenetrationVector(other).getMagnitude();
 //}
 

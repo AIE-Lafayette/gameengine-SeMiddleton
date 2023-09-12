@@ -15,22 +15,22 @@ namespace GamePhysics
         void draw() override;
 
         /// <summary>
-        /// Gets the x value that represents the how far the box extrnds to the left
+        /// Gets the x value that represents the how far the box extends to the left
         /// </summary>
         /// <returns></returns>
         float getLeft();
         /// <summary>
-        /// Gets the x value that represents the how far the box extrnds to the right
+        /// Gets the x value that represents the how far the box extends to the right
         /// </summary>
         /// <returns></returns>
         float getRight();
         /// <summary>
-        /// Gets the y value that represents the how far the box extrnds to its top
+        /// Gets the y value that represents the how far the box extends to its top
         /// </summary>
         /// <returns></returns>
         float getTop();
         /// <summary>
-        /// Gets the y value that represents the how far the box extrnds to its bottom
+        /// Gets the y value that represents the how far the box extends to its bottom
         /// </summary>
         /// <returns></returns>
         float getBottom();

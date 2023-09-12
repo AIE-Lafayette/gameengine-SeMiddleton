@@ -32,6 +32,8 @@ void GameEngine::Engine::run()
 
 	while (!getApplicationShouldClose())
 	{
+		setTimeStep(0.01);
+
 		double fixedTimeStep = getTimeStep();
 
 		double currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
@@ -41,11 +43,13 @@ void GameEngine::Engine::run()
 
 		m_deltaTime = deltaTime / 1000;
 
+		accumulatedTime += deltaTime;
+
 		update(m_deltaTime);
 
 		while (accumulatedTime >= fixedTimeStep)
 		{
-			update(fixedTimeStep);
+			fixedUpdate();
 			accumulatedTime -= fixedTimeStep;
 		}
 
