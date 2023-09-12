@@ -35,6 +35,9 @@ namespace GamePhysics
 		void update(double deltaTime) override;
 
 	private:
+		void applyContactForce(GamePhysics::Collision* other);
+
+	private:
 		float m_mass = 1;
 		float m_elasticity = 0;
 		float m_gravity = 9.81f;

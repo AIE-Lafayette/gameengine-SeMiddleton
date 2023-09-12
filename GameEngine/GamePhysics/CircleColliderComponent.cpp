@@ -23,6 +23,8 @@ GamePhysics::Collision* GamePhysics::CircleColliderComponent::checkCollisionCirc
 
     collisionData->collider = other;
     collisionData->normal = direction.getNormalized();
+    collisionData->contactPoint = getOwner()->getTransform()->getGlobalPosition() + direction.getNormalized() * getRadius();
+    collisionData->penetrationDistance = other->getRadius() + getRadius() - distance;
 
     return collisionData;
 }

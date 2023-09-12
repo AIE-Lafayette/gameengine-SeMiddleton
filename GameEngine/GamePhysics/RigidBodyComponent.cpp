@@ -43,12 +43,46 @@ void GamePhysics::RigidBodyComponent::applyForceToActor(RigidBodyComponent* othe
 	other->applyForce(force);
 }
 
+void GamePhysics::RigidBodyComponent::applyContactForce(GamePhysics::Collision* other)
+{
+	float mass = getMass();
+	float massOther = other->collider->getRigidBody()->getMass();
+
+	float displacement1 = 1;
+
+	float penetrationDistance = other->penetrationDistance;
+
+	if (massOther != INFINITY && !getIsKinematic())
+		displacement1 = massOther / (mass + massOther);
+
+	if (!getIsKinematic())
+	{
+		GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
+		getOwner()->getTransform()->setLocalPosition(position - (displacement1 * other->normal * penetrationDistance));
+	}
+
+	float displacement2 = massOther;
+
+	if (mass != INFINITY)
+		displacement2 = -(mass / mass + massOther);
+
+	if (!other->collider->getRigidBody()->getIsKinematic())
+	{
+		GameMath::Vector3 position = other->collider->getOwner()->getTransform()->getGlobalPosition();
+
+		other->collider->getOwner()->getTransform()->setLocalPosition(position + (displacement2 * other->normal * penetrationDistance));
+	}
+}
+
 void GamePhysics::RigidBodyComponent::resolveCollision(GamePhysics::Collision* collisionData)
 {
 	//Calculate average elasticity
 	//j = force magnitude
 	//Average = (elasticity1 + elasticity2) / 2
 
+	applyContactForce(collisionData);
+
+	//RigidBodyComponent* other = collisionData->collider->
 	
 
 	float averagedElasticity = (m_elasticity + collisionData->collider->getRigidBody()->getElasticity()) / 2;

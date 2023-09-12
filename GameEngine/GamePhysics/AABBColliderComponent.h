@@ -35,6 +35,8 @@ namespace GamePhysics
         /// <returns></returns>
         float getBottom();
 
+
+        GameMath::Vector3 getPenetrationVector(AABBColliderComponent* other);
     private:
         float m_width;
         float m_height;

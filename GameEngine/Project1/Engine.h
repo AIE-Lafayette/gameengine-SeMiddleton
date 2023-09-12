@@ -32,6 +32,9 @@ namespace GameEngine
 	private:
 		static double m_deltaTime;
 		static double m_fixedTimeStep;
+		static double m_currentTime;
+		static double m_accumulatedTime;
+		static double m_newTime;
 		static Scene* m_currentScene;
 	};
 }

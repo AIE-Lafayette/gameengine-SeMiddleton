@@ -50,5 +50,7 @@ namespace GamePhysics
     public:
         GameMath::Vector3 normal;
         ColliderComponent* collider;
+        GameMath::Vector3 contactPoint;
+        float penetrationDistance;
     };
 }
