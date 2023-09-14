@@ -12,17 +12,47 @@ GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle
 	GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
     GameMath::Vector3 otherPosition = other->getOwner()->getTransform()->getGlobalPosition();
 
-    GameMath::Vector3 direction = otherPosition - position;
-    float distance = direction.getMagnitude();
+    //Step 1: CirclePosition - BoxPosition = BoxToCircle
+	GameMath::Vector3 direction = otherPosition - position;
 
-    if(distance > other->getRadius() + getRadius())
-    return nullptr;
+	//Step 2: Clamp BoxToCircle
+	//if the box to circle is more than the box's x, -x, y, or -y then it needs to be set to the 
+	//box's x, -x, y, or -y divided by 2.
+
+	if (direction.x >= m_width / 2)
+	{
+		direction.x = m_width;
+	}
+
+	if (direction.x >= -m_width / 2)
+	{
+		direction.x = -m_width;
+	}
+
+	if (direction.x >= m_height / 2)
+	{
+		direction.x = m_height;
+	}
+
+	if (direction.x >= -m_height / 2)
+	{
+		direction.x = -m_height;
+	}
+
+	//Step 3: Add the BTC to the BP
+	direction + position;
+
+
+	//Step 4: CircleToPoint collision check
+	//Should just be point position - circle position
+
+	CheckCollisionPointCircle();
 
     GamePhysics::Collision* collisionData = new GamePhysics::Collision();
 
     collisionData->collider = other;
     collisionData->normal = direction.getNormalized();
-	collisionData->contactPoint = distance;
+	collisionData->contactPoint = closestPoint;
 	collisionData->penetrationDistance = other->getRadius() - distance;
 
     return collisionData;
