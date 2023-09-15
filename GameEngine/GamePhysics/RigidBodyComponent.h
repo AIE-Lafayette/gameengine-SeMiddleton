@@ -21,6 +21,8 @@ namespace GamePhysics
 		float getElasticity() { return m_gravity; }
 		void setElasticity(float elasticity) { m_elasticity = elasticity; }
 
+		bool getIsKinematic() { return m_isKinematic; }
+
 		float getMass();
 		void setMass(float mass) { m_mass = mass; }
 
@@ -38,6 +40,8 @@ namespace GamePhysics
 		void applyContactForce(GamePhysics::Collision* other);
 
 	private:
+
+		bool m_isKinematic;
 		float m_mass = 1;
 		float m_elasticity = 0;
 		float m_gravity = 9.81f;

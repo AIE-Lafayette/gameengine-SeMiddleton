@@ -24,7 +24,7 @@ GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle
 		direction.x = m_width;
 	}
 
-	if (direction.x >= -m_width / 2)
+	else if (direction.x >= -m_width / 2)
 	{
 		direction.x = -m_width;
 	}
@@ -34,19 +34,27 @@ GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle
 		direction.x = m_height;
 	}
 
-	if (direction.x >= -m_height / 2)
+	else if (direction.x >= -m_height / 2)
 	{
 		direction.x = -m_height;
 	}
 
 	//Step 3: Add the BTC to the BP
-	direction + position;
+	GameMath::Vector3 closestPoint = direction + position;
 
 
 	//Step 4: CircleToPoint collision check
 	//Should just be point position - circle position
 
-	CheckCollisionPointCircle();
+	GameMath::Vector3 circleToPoint = closestPoint - other->getOwner()->getTransform()->getGlobalPosition();
+
+	float distance = circleToPoint.getMagnitude();
+
+	if (distance > other->getRadius())
+	{
+		return nullptr;
+	}
+
 
     GamePhysics::Collision* collisionData = new GamePhysics::Collision();
 
@@ -60,15 +68,54 @@ GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle
 
 
 
-//GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionAABB(AABBColliderComponent* other)
-//{
-//	GameMath::Vector3 otherToAABB = other.getOwner().getTransform().getGlobalPosition() - getOwner()->getTransform()->getGlobalPosition();
-//
-//	if()
-// 
-// collisionData->contactPoint = closestpoint;
-// collisionData->penetrationDistance = getPenetrationVector(other).getMagnitude();
-//}
+GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionAABB(AABBColliderComponent* other)
+{
+	GamePhysics::Collision* collisionData = new GamePhysics::Collision();
+
+	bool isColliding = getRight() > other->getLeft() &&
+		getBottom() < other->getTop() &&
+		getTop() > other->getBottom() &&
+		getLeft() < other->getRight();
+
+	if (!isColliding)
+	{
+		return nullptr;
+	}
+
+	GameMath::Vector3 otherToAABB = other->getOwner()->getTransform()->getGlobalPosition() - getOwner()->getTransform()->getGlobalPosition();
+
+	if (otherToAABB.x > m_width / 2)
+	{
+		otherToAABB.x = m_width / 2;
+	}
+	else if (otherToAABB.x < -m_width / 2)
+	{
+		otherToAABB.x = -m_width / 2;
+	}
+	if (otherToAABB.y > m_height / 2)
+	{
+		otherToAABB.y = m_height / 2;
+	}
+	else if (otherToAABB.y < -m_height / 2)
+	{
+		otherToAABB.y = -m_height / 2;
+	}
+
+	GameMath::Vector3 closestPoint = getOwner()->getTransform()->getGlobalPosition() + otherToAABB;
+
+	GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
+
+	GameMath::Vector3 otherPosition = other->getOwner()->getTransform()->getGlobalPosition();
+
+	GameMath::Vector3 direction = otherPosition - position;
+
+	float distance = direction.getMagnitude();
+
+	collisionData->collider = other;
+	collisionData->normal;
+	collisionData->penetrationDistance(other).getNormalized();
+
+}
 
 void GamePhysics::AABBColliderComponent::draw()
 {

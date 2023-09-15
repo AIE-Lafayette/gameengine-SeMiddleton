@@ -1,6 +1,7 @@
 #include "RigidBodyComponent.h"
 #include "Project1/TransformComponent.h"
 #include "ColliderComponent.h"
+#include "AABBColliderComponent.cpp"
 
 void GamePhysics::RigidBodyComponent::setVelocity3D(float x, float y, float z)
 {
@@ -45,32 +46,59 @@ void GamePhysics::RigidBodyComponent::applyForceToActor(RigidBodyComponent* othe
 
 void GamePhysics::RigidBodyComponent::applyContactForce(GamePhysics::Collision* other)
 {
-	float mass = getMass();
-	float massOther = other->collider->getRigidBody()->getMass();
+    float mass = getMass();
+    float massOther = other->collider->getRigidBody()->getMass();
 
-	float displacement1 = 1;
+    float displacement1 = 1;
 
-	float penetrationDistance = other->penetrationDistance;
+    float penetrationDistance = other->penetrationDistance;
 
-	if (massOther != INFINITY && !getIsKinematic())
-		displacement1 = massOther / (mass + massOther);
+    if (massOther != INFINITY && !getIsKinematic())
+        displacement1 = massOther / (mass + massOther);
 
-	if (!getIsKinematic())
-	{
-		applyForceToActor(other->collider->getRigidBody(), other->normal * displacement1 * penetrationDistance);
-	}
+    if (!getIsKinematic())
+    {
+        GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
 
-	//float displacement2 = massOther;
+        getOwner()->getTransform()->setLocalPosition(position + (other->normal * -penetrationDistance));
+    }
 
-	//if (mass != INFINITY)
-	//	displacement2 = -(mass / mass + massOther);
+    float displacement2 = massOther;
 
-	//if (!other->collider->getRigidBody()->getIsKinematic())
-	//{
-	//	GameMath::Vector3 position = other->collider->getOwner()->getTransform()->getGlobalPosition();
+    if (mass != INFINITY)
+        displacement2 = -(mass / mass + massOther);
 
-	//	other->collider->getOwner()->getTransform()->setLocalPosition(position + (displacement2 * other->normal * penetrationDistance));
-	//}
+    if (!other->collider->getRigidBody()->getIsKinematic())
+    {
+        GameMath::Vector3 position = other->collider->getOwner()->getTransform()->getGlobalPosition();
+
+        other->collider->getOwner()->getTransform()->setLocalPosition(position + (other->normal * displacement2 * penetrationDistance));
+    }
+}
+
+GameMath::Vector3 GamePhysics::AABBColliderComponent::getPenetrationVector(AABBColliderComponent* other)
+{
+    float smallestPenetration = abs(getRight() - other->getLeft());
+
+    GameMath::Vector3 normalFace = { 1,0,0 };
+
+    if (abs(getLeft() - other->getRight()) < smallestPenetration)
+    {
+        smallestPenetration = abs(getLeft() - other->getRight());
+        normalFace = { -1, 0, 0 };
+    }
+    if (abs(getTop() - other->getBottom()) < smallestPenetration)
+    {
+        smallestPenetration = abs(getTop() - other->getBottom());
+        normalFace = { 0, 1, 0 };
+    }
+    if (abs(getBottom() - other->getTop()) < smallestPenetration)
+    {
+        smallestPenetration = abs(getBottom() - other->getTop());
+        normalFace = { 0, -1, 0 };
+    }
+
+    return normalFace * smallestPenetration;
 }
 
 void GamePhysics::RigidBodyComponent::resolveCollision(GamePhysics::Collision* collisionData)
