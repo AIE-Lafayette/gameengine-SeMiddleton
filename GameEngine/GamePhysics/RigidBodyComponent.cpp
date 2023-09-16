@@ -76,31 +76,6 @@ void GamePhysics::RigidBodyComponent::applyContactForce(GamePhysics::Collision* 
     }
 }
 
-GameMath::Vector3 GamePhysics::AABBColliderComponent::getPenetrationVector(AABBColliderComponent* other)
-{
-    float smallestPenetration = abs(getRight() - other->getLeft());
-
-    GameMath::Vector3 normalFace = { 1,0,0 };
-
-    if (abs(getLeft() - other->getRight()) < smallestPenetration)
-    {
-        smallestPenetration = abs(getLeft() - other->getRight());
-        normalFace = { -1, 0, 0 };
-    }
-    if (abs(getTop() - other->getBottom()) < smallestPenetration)
-    {
-        smallestPenetration = abs(getTop() - other->getBottom());
-        normalFace = { 0, 1, 0 };
-    }
-    if (abs(getBottom() - other->getTop()) < smallestPenetration)
-    {
-        smallestPenetration = abs(getBottom() - other->getTop());
-        normalFace = { 0, -1, 0 };
-    }
-
-    return normalFace * smallestPenetration;
-}
-
 void GamePhysics::RigidBodyComponent::resolveCollision(GamePhysics::Collision* collisionData)
 {
 	//Calculate average elasticity

@@ -12,7 +12,7 @@ void TestScene::onStart()
 	circle->addComponent<GameGraphics::ShapeComponent>()->setShapeType(GameGraphics::CIRCLE);
 	GamePhysics::RigidBodyComponent* rigidBody = circle->addComponent<GamePhysics::RigidBodyComponent>();
 
-	circle->addComponent(new GamePhysics::CircleColliderComponent(30));
+	//circle->addComponent(new GamePhysics::CircleColliderComponent(30));
 	
 	circle->getTransform()->setLocalPosition(100, 100);
 	circle->getTransform()->setLocalPosition(25, 25);
@@ -21,7 +21,7 @@ void TestScene::onStart()
 	circle2->addComponent<GameGraphics::ShapeComponent>()->setShapeType(GameGraphics::CIRCLE);
 	GamePhysics::RigidBodyComponent* rigidBody2 = circle2->addComponent<GamePhysics::RigidBodyComponent>();
 
-	circle2->addComponent(new GamePhysics::CircleColliderComponent(30));
+	//circle2->addComponent(new GamePhysics::CircleColliderComponent(30));
 
 	rigidBody2->setGravity(0);
 	circle2->getTransform()->setLocalPosition(330, 700);
