@@ -7,10 +7,10 @@ namespace GamePhysics
         public ColliderComponent
     {
     public:
-        AABBColliderComponent(float width, float height);
+        AABBColliderComponent(float width, float height) : ColliderComponent() { m_width = width, m_height = height; }
 
-        GamePhysics::Collision* checkCollisionCircle(CircleColliderComponent* other);
-        GamePhysics::Collision* checkCollisionAABB(AABBColliderComponent* other);
+        GamePhysics::Collision* checkCollisionCircle(CircleColliderComponent* other) override;
+        GamePhysics::Collision* checkCollisionAABB(AABBColliderComponent* other) override;
 
 
         void draw() override;
