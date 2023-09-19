@@ -23,7 +23,7 @@ namespace GamePhysics
 
 		bool getIsKinematic() { return m_isKinematic; }
 
-		float getMass();
+		float getMass() { return m_mass; }
 		void setMass(float mass) { m_mass = mass; }
 
 		void applyForce(GameMath::Vector3 force);

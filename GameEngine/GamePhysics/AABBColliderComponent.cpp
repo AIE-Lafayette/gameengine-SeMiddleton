@@ -7,6 +7,7 @@
 #include "CircleColliderComponent.h"
 
 
+//Checks collision against a circle collider
 GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle(CircleColliderComponent* other)
 {
 	GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
@@ -66,8 +67,7 @@ GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionCircle
     return collisionData;
 }
 
-
-
+//Checks collision against an AABB collider
 GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionAABB(AABBColliderComponent* other)
 {
 	GamePhysics::Collision* collisionData = new GamePhysics::Collision();
@@ -117,6 +117,7 @@ GamePhysics::Collision* GamePhysics::AABBColliderComponent::checkCollisionAABB(A
 
 }
 
+//Draws a rectangle
 void GamePhysics::AABBColliderComponent::draw()
 {
 	GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
@@ -126,26 +127,31 @@ void GamePhysics::AABBColliderComponent::draw()
 	RAYLIB_H::DrawRectangleLines(getLeft(), getBottom(), m_width, m_height, GREEN);
 }
 
+//Gets the rectangle's furthest left / negative x axis
 float GamePhysics::AABBColliderComponent::getLeft()
 {
 	return getOwner()->getTransform()->getGlobalPosition().x - m_width / 2;
 }
 
+//Gets the rectangle's furthest right / positive x axis
 float GamePhysics::AABBColliderComponent::getRight()
 {
 	return getOwner()->getTransform()->getGlobalPosition().x + m_width / 2;
 }
 
+//Gets the rectangle's furthest top / positive y axis
 float GamePhysics::AABBColliderComponent::getTop()
 {
 	return getOwner()->getTransform()->getGlobalPosition().y - m_height / 2;
 }
 
+//Gets the rectangle's furthest left / negative y axis
 float GamePhysics::AABBColliderComponent::getBottom()
 {
 	return getOwner()->getTransform()->getGlobalPosition().y + m_height / 2;
 }
 
+//Gets the penetration Vector
 GameMath::Vector3 GamePhysics::AABBColliderComponent::getPenetrationVector(AABBColliderComponent* other)
 {
 	float smallestPenetration = abs(getRight() - other->getLeft());

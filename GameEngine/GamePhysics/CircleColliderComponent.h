@@ -3,7 +3,6 @@
 
 namespace GamePhysics
 {
-
     class CircleColliderComponent :
         public ColliderComponent
     {

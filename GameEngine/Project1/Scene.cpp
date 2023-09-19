@@ -2,18 +2,19 @@
 #include "Entity.h"
 #include <GamePhysics/ColliderComponent.h>
 
+//Enables entities on start
 void GameEngine::Scene::start()
 {
 	for (Entity* entity : m_entities)
 	{
-		if
-			(entity->getEnabled())
+		if(entity->getEnabled())
 			entity->start();
 	}
 
 	onStart();
 }
 
+//Iterates through entities, and updates / checks their collision
 void GameEngine::Scene::update(double deltaTime)
 {
 	for (Entity* entity : m_entities)
@@ -32,8 +33,6 @@ void GameEngine::Scene::update(double deltaTime)
 	{
 		for (auto iterator2 = iterator1; iterator2 != m_activeColliders.end(); iterator2++)
 		{
-
-
 			GamePhysics::ColliderComponent* collider1 = *iterator1;
 			GamePhysics::ColliderComponent* collider2 = *iterator2;
 
@@ -56,6 +55,7 @@ void GameEngine::Scene::update(double deltaTime)
 	}
 }
 
+//Draws all entities to screen
 void GameEngine::Scene::draw()
 {
 	for (Entity* entity : m_entities)
@@ -67,6 +67,7 @@ void GameEngine::Scene::draw()
 	onDraw();
 }
 
+//Removes all entities
 void GameEngine::Scene::end()
 {
 	for (Entity* entity : m_entities)
@@ -76,11 +77,13 @@ void GameEngine::Scene::end()
 	}
 }
 
+//Adds an entity to the scene
 void GameEngine::Scene::addEntity(Entity* entity)
 {
 	m_entities.add(entity);
 }
 
+//Removes an entity from the scene
 void GameEngine::Scene::removeEntity(Entity* entity)
 {
 	m_entities.remove(entity);

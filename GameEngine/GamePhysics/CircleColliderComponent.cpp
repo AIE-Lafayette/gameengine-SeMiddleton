@@ -6,7 +6,7 @@
 #include "Project1/Scene.h"
 
 
-
+//Checks collision against a circle collider
 GamePhysics::Collision* GamePhysics::CircleColliderComponent::checkCollisionCircle(CircleColliderComponent* other)
 {
 
@@ -29,6 +29,7 @@ GamePhysics::Collision* GamePhysics::CircleColliderComponent::checkCollisionCirc
     return collisionData;
 }
 
+//Draws the circle collider
 void GamePhysics::CircleColliderComponent::draw()
 {
     GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();

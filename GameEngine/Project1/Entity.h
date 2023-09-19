@@ -1,7 +1,6 @@
 #pragma once
 #include "List.h"
 
-
 namespace GamePhysics
 {
 	struct Collision;
@@ -12,6 +11,7 @@ namespace GameEngine
 	class Component;
 	class TransformComponent;
 	class Entity
+
 	{
 	public:
 		Entity();
@@ -46,6 +46,7 @@ namespace GameEngine
 		List<Component*> m_components;
 		TransformComponent* m_transform;
 	};
+
 	template<typename T>
 	inline T* Entity::addComponent()
 	{
@@ -54,6 +55,7 @@ namespace GameEngine
 		m_components.add(component);
 		return (T*)component;
 	}
+
 	template<typename T>
 	inline T* Entity::getComponent()
 	{

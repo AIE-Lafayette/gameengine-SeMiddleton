@@ -4,19 +4,23 @@
 
 GameEngine::Scene* GameEngine::Engine::m_currentScene = nullptr;
 double GameEngine::Engine::m_deltaTime = 0;
+double GameEngine::Engine::m_fixedTimeStep = 0;
 
 GameGraphics::Window window;
 
+//Determines if the game should close
 bool GameEngine::Engine::getApplicationShouldClose()
 {
 	return window.getShouldClose();
 }
 
+//Closes the application
 void GameEngine::Engine::closeApplication()
 {
 	window.close();
 }
 
+//Determines what happens at runtime
 void GameEngine::Engine::run()
 {
 	double accumulatedTime = 0;
@@ -63,26 +67,31 @@ void GameEngine::Engine::run()
 	window.close();
 }
 
+//Tells the current scene to start
 void GameEngine::Engine::start()
 {
 	m_currentScene->start();
 }
 
+//Tells the current scene to update
 void GameEngine::Engine::update(double deltaTime)
 {
 	m_currentScene->update(deltaTime);
 }
 
+//Tells the current scene to perform a fixed update. Used for keeping physics consistent
 void GameEngine::Engine::fixedUpdate()
 {
 	m_currentScene->fixedUpdate();
 }
 
+//Tells the current scene to draw
 void GameEngine::Engine::draw()
 {
 	m_currentScene->draw();
 }
 
+//Tells the scene to end
 void GameEngine::Engine::end()
 {
 	m_currentScene->end();

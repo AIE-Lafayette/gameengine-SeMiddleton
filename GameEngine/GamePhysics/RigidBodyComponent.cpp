@@ -3,6 +3,7 @@
 #include "ColliderComponent.h"
 #include "AABBColliderComponent.cpp"
 
+//Sets the velocity for a 3D rigid body
 void GamePhysics::RigidBodyComponent::setVelocity3D(float x, float y, float z)
 {
 	m_velocity.x = x;
@@ -10,11 +11,13 @@ void GamePhysics::RigidBodyComponent::setVelocity3D(float x, float y, float z)
 	m_velocity.z = z;
 }
 
+//Sets the velocity for a 2D rigid body
 void GamePhysics::RigidBodyComponent::setVelocity2D(GameMath::Vector2 velocity)
 {
 	m_velocity.x = velocity.x;
 	m_velocity.y = velocity.y;
 }
+
 
 void GamePhysics::RigidBodyComponent::setVelocity2D(float x, float y)
 {
