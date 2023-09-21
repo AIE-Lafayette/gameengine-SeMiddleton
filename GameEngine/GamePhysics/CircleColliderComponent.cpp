@@ -9,7 +9,6 @@
 //Checks collision against a circle collider
 GamePhysics::Collision* GamePhysics::CircleColliderComponent::checkCollisionCircle(CircleColliderComponent* other)
 {
-
     GameMath::Vector3 position = getOwner()->getTransform()->getGlobalPosition();
     GameMath::Vector3 otherPosition = other->getOwner()->getTransform()->getGlobalPosition();
 
@@ -27,6 +26,11 @@ GamePhysics::Collision* GamePhysics::CircleColliderComponent::checkCollisionCirc
     collisionData->penetrationDistance = other->getRadius() + getRadius() - distance;
 
     return collisionData;
+}
+
+GamePhysics::Collision* GamePhysics::CircleColliderComponent::checkCollisionAABB(AABBColliderComponent* other)
+{
+    return nullptr;
 }
 
 //Draws the circle collider

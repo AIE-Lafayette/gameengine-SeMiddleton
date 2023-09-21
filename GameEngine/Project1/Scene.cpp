@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include <GamePhysics/ColliderComponent.h>
+#include <GamePhysics/RigidBodyComponent.h>
 
 //Enables entities on start
 void GameEngine::Scene::start()
@@ -27,7 +28,17 @@ void GameEngine::Scene::update(double deltaTime)
 
 		entity->update(deltaTime);
 	}
-	onUpdate();
+	onUpdate();	
+}
+
+void GameEngine::Scene::fixedUpdate()
+{
+	for (Entity* entity : m_entities)
+	{
+		if (entity->getEnabled())
+			entity->fixedUpdate();
+	}
+	onFixedUpdate();
 
 	for (auto iterator1 = m_activeColliders.begin(); iterator1 != m_activeColliders.end(); iterator1++)
 	{
@@ -42,14 +53,15 @@ void GameEngine::Scene::update(double deltaTime)
 			GamePhysics::Collision* collisionData1 = nullptr;
 			GamePhysics::Collision* collisionData2 = new GamePhysics::Collision();
 
-			if (collisionData1 == collider1->checkCollision(collider2))
+			if (collisionData1 = collider1->checkCollision(collider2))
 			{
+				collider1->getRigidBody()->resolveCollision(collisionData1);
 				collider1->getOwner()->onCollisionEnter(collisionData1);
 
 				collisionData2->collider = collider1;
 				collisionData2->normal = collisionData1->normal * -1;
 
-				collider2->getOwner()->onCollisionEnter(collisionData2);
+				collider2->getOwner()->onCollisionEnter(collisionData2);				
 			}
 		}
 	}

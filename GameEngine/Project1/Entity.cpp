@@ -17,6 +17,7 @@ void GameEngine::Entity::start()
 	}
 	onStart();
 }
+
 void GameEngine::Entity::update(double deltaTime)
 {
 	for (Component* component : m_components)
@@ -26,6 +27,17 @@ void GameEngine::Entity::update(double deltaTime)
 	}
 	onUpdate(deltaTime);
 }
+
+void GameEngine::Entity::fixedUpdate()
+{
+	for (Component* component : m_components)
+	{
+		if (component->getEnabled())
+			component->fixedUpdate();
+	}
+	onFixedUpdate();
+}
+
 void GameEngine::Entity::draw()
 {
 	for (Component* component : m_components)
@@ -35,6 +47,7 @@ void GameEngine::Entity::draw()
 	}
 	onDraw();
 }
+
 void GameEngine::Entity::end()
 {
 	for (Component* component : m_components)
@@ -50,6 +63,7 @@ void GameEngine::Entity::addComponent(Component* component)
 	component->setOwner(this);
 	m_components.add(component);
 }
+
 void GameEngine::Entity::setEnabled(bool value)
 {
 	if (!m_enabled && value == true)
