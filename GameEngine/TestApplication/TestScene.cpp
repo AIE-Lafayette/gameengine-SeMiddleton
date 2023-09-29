@@ -23,6 +23,17 @@ void TestScene::onStart()
 
 	circle2->addComponent(new GamePhysics::CircleColliderComponent(30));
 
+	GameEngine::Entity* box = new GameEngine::Entity();
+	box->addComponent<GameGraphics::ShapeComponent>()->setShapeType(GameGraphics::BOX);
+	GamePhysics::RigidBodyComponent* rigidBody3 = box->addComponent<GamePhysics::RigidBodyComponent>();
+
+	box->addComponent(new GamePhysics::CircleColliderComponent(40));
+
+	rigidBody3->setIsKinematic(true);
+	rigidBody3->setGravity(2);
+	box->getTransform()->setLocalPosition(300, 0);
+	box->getTransform()->setLocalScale(300, 20);
+
 	rigidBody2->setGravity(0);
 	circle2->getTransform()->setLocalPosition(330, 700);
 
@@ -36,4 +47,5 @@ void TestScene::onStart()
 
 	addEntity(circle);
 	addEntity(circle2);
+	addEntity(box);
 }

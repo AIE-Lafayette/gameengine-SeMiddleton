@@ -22,6 +22,7 @@ namespace GamePhysics
 		void setElasticity(float elasticity) { m_elasticity = elasticity; }
 
 		bool getIsKinematic() { return m_isKinematic; }
+		void setIsKinematic(bool isKinematic) { m_isKinematic = isKinematic; }
 
 		float getMass() { return m_mass; }
 		void setMass(float mass) { m_mass = mass; }
